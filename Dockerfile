@@ -1,13 +1,15 @@
-FROM openjdk:17
+# Imagem enxuta com Java 17 (substitui o antigo openjdk:17)
+FROM eclipse-temurin:17-jdk-alpine
 
-# Set the working directory in the container
+# Diretório de trabalho dentro do container
 WORKDIR /ac2_ca
 
-# Copy the JAR file into the container at /educacaoGamificada
-COPY target/*.jar /ac2_ca/ac2_ca-0.0.1-SNAPSHOT.jar
+# Copia o JAR gerado pelo Maven para dentro da imagem
+# (o Maven está gerando target/ac2_ca-0.0.1-SNAPSHOT.jar)
+COPY target/ac2_ca-0.0.1-SNAPSHOT.jar app.jar
 
-# Expose the port that your application will run on
+# Expõe a porta em que a aplicação Spring Boot vai rodar
 EXPOSE 8585
 
-# Specify the command to run on container start
-CMD ["java", "-jar", "ac2_ca-0.0.1-SNAPSHOT.jar"]
+# Comando para subir a aplicação quando o container iniciar
+CMD ["java", "-jar", "app.jar"]
